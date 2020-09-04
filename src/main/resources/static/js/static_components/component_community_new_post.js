@@ -1,4 +1,17 @@
+
 var thisUser;
+
+var he = HE.getEditor('editor',{
+    autoHeight : true,
+    autoFloat : true,
+    topOffset : 50,
+    uploadPhoto : true,
+    uploadPhotoSize : 300,
+    uploadPhotoType : 'gif,png,jpg,jpeg',
+    uploadPhotoTypeError : '只能上传gif,png,jpg,jpeg',
+    uploadPhotoSizeError : '不能上传大于300KB的图片',
+});
+
 $(document).ready(function () {
     function getUser() {
         thisUser = userInfo.uid;
@@ -12,7 +25,7 @@ $(document).ready(function () {
             var postInfo = JSON.parse(localStorage.getItem('post'));
             console.log(postInfo)
             $("#theme-name").val(postInfo.ptheme);
-            $(".edit-body").text(postInfo.content);
+            $("#editor").html(postInfo.content);
             $("#input-title").val(postInfo.title);
         }
     }
@@ -30,7 +43,11 @@ function publish() {
         myAlert("主题不能为空");
         return;
     }
-    if ($(".edit-body").text() === null || $(".edit-body").text() === "") {
+    // if ($(".edit-body").text() === null || $(".edit-body").text() === "") {
+    //     myAlert("内容不能为空");
+    //     return;
+    // }
+    if (he.getHtml()==null){
         myAlert("内容不能为空");
         return;
     }
@@ -42,7 +59,8 @@ function publish() {
     formData.append("ptime", date);
     formData.append("ptheme", $("#theme-name").val());
     formData.append("plikenum", 0);
-    formData.append("content", $(".edit-body").text());
+    //formData.append("content", $(".edit-body").text());
+    formData.append("content", he.getHtml());
     formData.append("title", $("#input-title").val())
     formData.append("uid", thisUser);
     JSON.stringify(formData);
@@ -72,7 +90,7 @@ function save() {
     let formData;
     formData = {
         "ptheme": $("#theme-name").val(),
-        "content": $(".edit-body").text(),
+        "content": he.getHtml(),
         "title": $("#input-title").val()
     }
     localStorage.setItem("post", JSON.stringify(formData));

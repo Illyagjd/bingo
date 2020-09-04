@@ -136,7 +136,7 @@ $(document).ready(function () {
         $(".post-date").text("发表于" + thisPost[0].ptime);
         $(".repost").text("点赞" + thisPost[0].plikenum);
         $(".views").text("评论" + postReply);
-        $(".content").text(thisPost[0].content);
+        $(".content").html(thisPost[0].content);
         $(".up-count").text(thisPost[0].plikenum);
     }
 

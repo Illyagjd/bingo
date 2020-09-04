@@ -145,7 +145,18 @@ $(document).ready(function () {
             html +=
                 "<div class=" + "item-wrap" + ">" +
                 "<div class=" + "header" + "><div class=" + "btn" + "></div><a href=" + "post_detail.html?pid=" + list[i].pid + " target='_blank'" + "><h1 class=" + "h1-in-header" + ">" + "【" + list[i].ptheme + "】" + list[i].title + "</h1></a></div>" +
-                "<h2 class=" + "h2-in-header" + ">" + list[i].content + "</h2>" +
+                "<h2 class=" + "h2-in-header" + ">";
+            var str = list[i].content;
+            if(str.includes("</")){
+                var jqueryObj = $(str);
+                var profile = $(jqueryObj).text();
+                console.log("profile", profile);
+                html+=profile;
+            }else{
+                html+=str;
+            }
+            html+=
+                "</h2>" +
                 "<div class=" + "left" + ">" +
                 "<img src=" + curent.uavatar + "><a class=" + "nick-name" + " " + "href=" + "other_profile.html?uid=" + list[i].uid + " " + "target=" + "_blank" + ">" + curent.ualias + "</a>" +
                 "<span class=" + "time" + ">" + "&nbsp;&nbsp;" + "<span>发表于&nbsp;&nbsp;" + list[i].ptime.substring(0, 19) + "</span></span>" +
